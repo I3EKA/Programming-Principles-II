@@ -1,6 +1,6 @@
 #Imports
-import pygame, sys
-from pygame.locals import *
+import pygame
+from pygame import *
 import random, time
  
 #Initialzing 
@@ -65,23 +65,10 @@ class Coin(pygame.sprite.Sprite):
         if (self.rect.top > 600):
             self.rect.top = 0
             self.rect.center = (random.randint(40, SCREEN_WIDTH - 40), 0)      
-# Появление новой монеты
-class Blackcoin(pygame.sprite.Sprite):
-      def __init__(self):
-        super().__init__() 
-        self.image = pygame.image.load("blackcoin.png")
-        self.rect = self.image.get_rect()
-        self.rect.center = (random.randint(40, SCREEN_WIDTH-40), 0)  
- 
-      def move(self):
-        global SCORE
-        self.rect.move_ip(0,SPEED)
-        if (self.rect.top > 600):
-            self.rect.top = 0
-            self.rect.center = (random.randint(40, SCREEN_WIDTH - 40), 0) 
 
- 
-#УПравление игркоом
+
+
+#Функция игрока 
 class Player(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__() 
@@ -108,7 +95,6 @@ class Player(pygame.sprite.Sprite):
 P1 = Player()
 E1 = Enemy()
 Coin1 = Coin()
-Coin2 = Blackcoin()
 #Creating Sprites Groups
 enemies = pygame.sprite.Group()
 enemies.add(E1)
@@ -118,7 +104,6 @@ all_sprites.add(E1)
 
 # coin points
 coin_add = pygame.sprite.Group()
-blackcoin_add = pygame.sprite.Group()
 
 #Adding a new User event 
 INC_SPEED = pygame.USEREVENT + 1
@@ -127,9 +112,7 @@ pygame.time.set_timer(INC_SPEED, 100000)
 #Game Loop
 while True:
     #Cycles through all events occurring  
-    for event in pygame.event.get():
-        #if event.type == INC_SPEED:
-              #SPEED += 0.5     
+    for event in pygame.event.get(): 
         if event.type == QUIT:
             pygame.quit()
             sys.exit()
@@ -139,16 +122,10 @@ while True:
     DISPLAYSURF.blit(scores, (10,10))
  
     #Moves and Re-draws all Sprit
-    # РАБОТА С СПРАЙТАМИ И ВЫВОД
-    if SCORE >= 40:
-        SPEED = 10
     for entity in all_sprites:
         DISPLAYSURF.blit(entity.image, entity.rect)
         entity.move()
     for entity in coin_add:
-        DISPLAYSURF.blit(entity.image, entity.rect)
-        entity.move()
-    for entity in blackcoin_add:
         DISPLAYSURF.blit(entity.image, entity.rect)
         entity.move()
     #To be run if collision occurs between Player and Enemy
@@ -166,20 +143,12 @@ while True:
           pygame.quit()
           sys.exit()
     coin_add.add(Coin1)
-    # КОЛЛИЗИЯ С МОНЕТОЙ
+    # Функция получения моенет
     if pygame.sprite.spritecollideany(P1, coin_add):
           pygame.mixer.Sound('coin.wav').play()
           for entity in coin_add:
                 entity.kill() 
                 SCORE += 2
                 Coin1 = Coin()
-    blackcoin_add.add(Coin2)
-    # КОЛЛИЗИЯ С МОНЕТОЙ 2
-    if pygame.sprite.spritecollideany(P1, blackcoin_add):
-          pygame.mixer.Sound('coin.wav').play()
-          for entity in blackcoin_add:
-                entity.kill() 
-                SCORE += 5
-                Coin2 = Blackcoin()
     pygame.display.update()
     FramePerSec.tick(FPS)

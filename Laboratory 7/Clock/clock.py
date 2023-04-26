@@ -40,5 +40,5 @@ while running:
     screen.blit(rot_hand1, y)
 
     pygame.display.update()
-clock.tick(60)  # limit the frame rate to 60 fps
+clock.tick(60)
 pygame.quit()

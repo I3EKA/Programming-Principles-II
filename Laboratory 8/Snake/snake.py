@@ -1,8 +1,6 @@
 import pygame
 import time
 import random
-from datetime import datetime
-
  
 pygame.init()
  
@@ -17,6 +15,10 @@ black = (0, 0, 0)
 # РАЗМЕР ПОЛОТНА
 dis_width = 600
 dis_height = 400
+
+
+FPS = 60
+FramePerSec = pygame.time.Clock()
  
 screen = pygame.display.set_mode((dis_width, dis_height))
 pygame.display.set_caption('Snake Game')
@@ -51,8 +53,7 @@ def our_snake(snake_block, snake_list):
 def message(msg, color):
     mesg = font_style.render(msg, True, color)
     screen.blit(mesg, [30, 200])
-curve = 0
-curve1 =0
+ 
 # THE MAIN FUNCTION OF GAME
 def gameLoop():
     game_over = False
@@ -67,10 +68,9 @@ def gameLoop():
     snake_List = []
     Length_of_snake = 1
     level = 1
-    foodx = round(random.randrange(0, dis_width - 50) / 10.0) * 10.0
-    foody = round(random.randrange(0, dis_height - 50) / 10.0) * 10.0
-    foodxx = round(random.randrange(0, dis_width - 50) / 10.0) * 10.0
-    foodyy = round(random.randrange(0, dis_height - 50) / 10.0) * 10.0
+ 
+    foodx = round(random.randrange(0, dis_width - snake_block) / 10.0) * 10.0
+    foody = round(random.randrange(0, dis_height - snake_block) / 10.0) * 10.0
     # УПРАВЛЕНИЕ ПАУЗЫ
     while not game_over:
         # ОСНОВНОЕ НАЧАЛО
@@ -89,13 +89,8 @@ def gameLoop():
                     if event.key == pygame.K_s:
                         snake_speed = 10
                         gameLoop()
+
         # УПРАВЛЕНИЕ
-        global curve
-        global curve1
-        print(curve)
-        curve += 1
-        curve1 += 1
-        
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 game_over = True
@@ -120,7 +115,6 @@ def gameLoop():
         screen.fill(white)
         # РИСОВАНИЕ ЯБЛОКА
         pygame.draw.rect(screen, red, [foodx, foody, snake_block, snake_block])
-        pygame.draw.rect(screen, blue, [foodxx, foodyy, snake_block, snake_block])
         # ДОБАВЛЕНИЕ НОВЫХ ЧАСТЕЙ
         snake_Head = []
         snake_Head.append(x1)
@@ -133,33 +127,21 @@ def gameLoop():
         for x in snake_List[:-1]:
             if x == snake_Head:
                 game_exit = True
- 
+        
         our_snake(snake_block, snake_List)
         Your_score(Length_of_snake - 1)
         lever_score(level)
         if Length_of_snake >= 11:
             level = 2
-            snake_speed = 20
+            snake_speed = 25
         
 
         pygame.display.update()
  
         if x1 == foodx and y1 == foody:
-            foodx = round(random.randrange(0, dis_width - 50) / 10.0) * 10.0
-            foody = round(random.randrange(0, dis_height - 50) / 10.0) * 10.0
+            foodx = round(random.randrange(0, dis_width - 100) / 10.0) * 10.0
+            foody = round(random.randrange(0, dis_height - 100) / 10.0) * 10.0
             Length_of_snake += 1
-        if curve > 80:
-            foodx = round(random.randrange(0, dis_width - 50) / 10.0) * 10.0
-            foody = round(random.randrange(0, dis_height - 50) / 10.0) * 10.0
-            curve = 0
-        if x1 == foodxx and y1 == foodyy:
-            foodxx = round(random.randrange(0, dis_width - 50) / 10.0) * 10.0
-            foodyy = round(random.randrange(0, dis_height - 50) / 10.0) * 10.0
-            Length_of_snake += 3
-        if curve1 > 80:
-            foodxx = round(random.randrange(0, dis_width - 50) / 10.0) * 10.0
-            foodyy = round(random.randrange(0, dis_height - 50) / 10.0) * 10.0
-            curve1 = 0
  
         clock.tick(snake_speed)
  

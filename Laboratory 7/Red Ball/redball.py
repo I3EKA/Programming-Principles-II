@@ -5,8 +5,8 @@ WHITE = (255, 255, 255)
 RED = (255, 0, 0)
 x = 25
 y = 25
-l = 1050  # l-50%20==0
-w = 650  # w-50%20==0
+l = 1050
+w = 650  
 clock = pygame.time.Clock()
 screen = pygame.display.set_mode((l, w))
 running = True
