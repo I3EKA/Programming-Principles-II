@@ -2,20 +2,19 @@
 import psycopg2
 
 conn = psycopg2.connect(
-	database="phone",
-	user='phone_user',
-	password='Esko28:)',
-	host='localhost',
-	port= '5432'
+	database="postgres",
+	user='postgres',
+	password='Beka2004',
+	host='localhost'
 )
 cursor = conn.cursor()
 conn.autocommit = True
 # CSV to TABLE
-'''
+
 f = open("persons.csv", "r")
 cursor.copy_from(f, 'phonebook', sep=',')
 f.close()
-'''
+
 
 #insert entering user name, phone from console
 first = str(input("First: "))

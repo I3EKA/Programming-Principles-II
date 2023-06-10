@@ -3,11 +3,10 @@
 import psycopg2
 
 conn = psycopg2.connect(
-	database="phone",
-	user='phone_user',
-	password='Esko28:)',
-	host='localhost',
-	port= '5432'
+	database="postgres",
+	user='postgres',
+	password='Beka2004',
+	host='localhost'
 )
 cursor = conn.cursor()
 conn.autocommit = True

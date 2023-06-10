@@ -4,9 +4,9 @@ import psycopg2
 
 # connection establishment
 conn = psycopg2.connect(
-	database="phone",
-	user='phone_user',
-	password='Esko28:)',
+	database="postgres",
+	user='postgres',
+	password='Beka2004',
 	host='localhost',
 	port= '5432'
 )
@@ -19,7 +19,7 @@ cursor = conn.cursor()
 #sql = ''' CREATE database Phone ''';
 
 # ----------2 --------create user
-#sql = ''' CREATE ROLE phone_user WITH PASSWORD 'Esko28:)' LOGIN''';
+#sql = ''' CREATE ROLE phone_user WITH PASSWORD 'Beka2004' LOGIN''';
 
 # ----------3 -------create table
 

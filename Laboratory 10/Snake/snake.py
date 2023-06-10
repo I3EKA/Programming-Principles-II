@@ -93,9 +93,9 @@ def kill_wall():
 
 #SCL
 conn = psycopg2.connect(
-	database="snake",
-	user='snake_user',
-	password='Esko28:)',
+	database="snakedata",
+	user='postgres',
+	password='Beka2004',
 	host='localhost',
 	port= '5432'
 )
